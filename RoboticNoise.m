@@ -3,7 +3,7 @@ close all
 clc
 fh = figure('Menu','none','ToolBar','none'); 
 
-fuLevel = 2;
+fuLevel = 1;
 fuLevel2 = 2;
 
 noiseResistance = 1;
