@@ -44,7 +44,7 @@ start2 = tic;
 while true
     fuckedUpLevel = [1 cos(t*.1)*4 sin(cos(t*.1)*4)*4 (sin(cos(t*.1)*4)*4)^2];
     v = fuckedUpLevel(fuLevel);
-    fuckedUpLevel2 = [sin(x*v); sin(x*v)/2.*sin(x*v/2)];
+    fuckedUpLevel2 = [sin(x*v); sin(x*v)/2.*sin(x*v*1.4983).*sin(x*v*2)];
     signal= fuckedUpLevel2(fuLevel2,:);
     noiseResistance = 1/((abs(sin(t/40))+.001)*1);
     t = t + 1;
