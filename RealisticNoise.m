@@ -1,8 +1,10 @@
 clear
 close all
 clc
-fh = figure('Menu','none','ToolBar','none'); 
-fuLevel = 1;
+fh = figure('Menu','none','ToolBar','none');
+% this is for making the dynamics of the signal nice and fucked up
+fuLevel = 2;
+% this is for making the static element of the signal nice and fucked up
 fuLevel2 = 2;
 
 noiseResistance = 1;
@@ -10,6 +12,7 @@ noiseResistance = 1;
 n = 199;
 % empirically determined to be a very good value:
 fps = 13.749999999999948;
+fps = fps*3;
 
 signalFreq = 110;
 
@@ -36,7 +39,7 @@ signalPlot = signal(1:n);
 a = plot(xPlot,signalPlot+noisePlot,'LineWidth',2,'color',[0 1 0]);
 
 ah = axes('Units','Normalize','Position',[0 0 1 1]);
-axis([0 4*pi -1.2 1.2])
+axis([0 4*pi -2 2])
 set(gca,'Color','k')
 hold on
 t = 0;
@@ -52,13 +55,13 @@ while true
 %     noiseResistance = 1/((abs(sin(t/40))+.001)*1);
     t = t + 1;
     delete(a)
-    walksteps = .02;
+    walksteps = .08;
     pDown = (1./(1+exp(-level*noiseResistance)));
     level = level+(round(.5+.5*(rand-pDown))*2-1)*walksteps;
     noise = normrnd(0,abs(level),1,n*periodsNeededForSound);
     noisePlot = noise(1:n);
     
-    r = abs((1./(1+exp(-level*22)))-.5)*2;
+    r = abs((1./(1+exp(-level*6)))-.5)*2;
     g = 1-r;
 %     b = (1./(1+exp(-(1-1/noiseResistance-0.5)*22)));
     b=0;
