@@ -1,7 +1,13 @@
 clear
 close all
 clc
-fh = figure('Menu','none','ToolBar','none'); 
+fh = figure('Menu','none','ToolBar','none');
+
+
+
+backgroundColor = [.09 .247 .373];
+errorColor = [.929 .333 .231];
+signalColor = [.235 .682 .639];
 
 fuLevel = 1;
 fuLevel2 = 2;
@@ -35,7 +41,7 @@ a = plot(x,signal+noise,'LineWidth',2,'color',[0 1 0]);
 
 ah = axes('Units','Normalize','Position',[0 0 1 1]);
 axis([0 4*pi -1.2 1.2])
-set(gca,'Color','k')
+set(gca,'Color',backgroundColor)
 hold on
 t = 0;
 start = tic;
@@ -54,11 +60,8 @@ while true
     level = level+(round(.5+.5*(rand-pDown))*2-1)*walksteps;
     noise = normrnd(0,abs(level)*abs(v),1,n);
     
-    r = abs((1./(1+exp(-level*22)))-.5)*2;
-    g = 1-r;
-%     b = (1./(1+exp(-(1-1/noiseResistance-0.5)*22)));
-    b=0;
-    a = plot(x,signal+noise,'LineWidth',r*8+1,'color',[r g b]);
+    errorComponent = abs((1./(1+exp(-level*22)))-.5)*2;
+    a = plot(x,signal+noise,'LineWidth',errorComponent*4+2,'color',errorComponent*errorColor+(1-errorComponent)*signalColor);
     soundData = (repmat(signal+noise,1,periodsNeededForSound))/15;
     sampledSoundData = soundData(1:ticksPerSampleTick:end);
     sound(sampledSoundData,Fs)
