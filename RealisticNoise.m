@@ -74,7 +74,7 @@ while true
 %     b = (1./(1+exp(-(1-1/noiseResistance-0.5)*22)));
     b=0;
     a = plot(xPlot,signalPlot+noisePlot,'LineWidth',errorComponent*8+2,'color',errorComponent*errorColor+(1-errorComponent)*backgroundColor);
-    B = plot(xPlot,signalPlot+noisePlot,'LineWidth',2,'color',errorComponent*errorColor+(1-errorComponent)*signalColor);
+    B = plot(xPlot,signalPlot+noisePlot,'LineWidth',2,'color',min((errorComponent*errorColor+(1-errorComponent)*signalColor)*(1+errorComponent),1));
     soundData = signal+noise;
     sampledSoundData = soundData(1:ticksPerSampleTick:end);
     debugstart = tic;

@@ -16,7 +16,8 @@ noiseResistance = 1;
 
 n = 199;
 % empirically determined to be a very good value:
-fps = 13.749999999999948;
+% fps = 13.749999999999948;
+fps = 15;
 
 signalFreq = 220;
 
@@ -65,8 +66,10 @@ while true
     
     errorComponent = abs((1./(1+exp(-level*22)))-.5)*2;
     a = plot(x,signal+noise,'LineWidth',errorComponent*4+2,'color',errorComponent*errorColor*.8+(1-errorComponent*.8)*backgroundColor);
-    B = plot(x,signal+noise,'LineWidth',2,'color',errorComponent*errorColor+(1-errorComponent)*signalColor);
-        soundData = (repmat(signal+noise,1,periodsNeededForSound))/15;
+    B = plot(x,signal+noise,'LineWidth',2,'color',min((errorComponent*errorColor+(1-errorComponent)*signalColor)*(1+errorComponent),1));
+%     a = plot(xPlot,signalPlot+noisePlot,'LineWidth',errorComponent*8+2,'color',errorComponent*errorColor+(1-errorComponent)*backgroundColor);
+%     B = plot(xPlot,signalPlot+noisePlot,'LineWidth',2,'color',min((errorComponent*errorColor+(1-errorComponent)*signalColor)*(1+errorComponent),1));
+    soundData = (repmat(signal+noise,1,periodsNeededForSound))/15;
     sampledSoundData = soundData(1:ticksPerSampleTick:end);
     sound(sampledSoundData,Fs)
     stop2 = toc(start2); %this times an actual pass
