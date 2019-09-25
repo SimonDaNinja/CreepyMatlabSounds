@@ -38,6 +38,8 @@ level = 0;
 noise = normrnd(0,level,1,n);
 signal= sin(x)/2;
 a = plot(x,signal+noise,'LineWidth',2,'color',[0 1 0]);
+hold on
+B = plot(x,signal+noise,'LineWidth',2,'color',[0 1 0]);
 
 ah = axes('Units','Normalize','Position',[0 0 1 1]);
 axis([0 4*pi -1.2 1.2])
@@ -55,14 +57,16 @@ while true
     noiseResistance = 1/((abs(sin(t/40))+.001)*1);
     t = t + 1;
     delete(a)
+    delete(B)
     walksteps = .02;
     pDown = (1./(1+exp(-level*noiseResistance)));
     level = level+(round(.5+.5*(rand-pDown))*2-1)*walksteps;
     noise = normrnd(0,abs(level)*abs(v),1,n);
     
     errorComponent = abs((1./(1+exp(-level*22)))-.5)*2;
-    a = plot(x,signal+noise,'LineWidth',errorComponent*4+2,'color',errorComponent*errorColor+(1-errorComponent)*signalColor);
-    soundData = (repmat(signal+noise,1,periodsNeededForSound))/15;
+    a = plot(x,signal+noise,'LineWidth',errorComponent*4+2,'color',errorComponent*errorColor*.8+(1-errorComponent*.8)*backgroundColor);
+    B = plot(x,signal+noise,'LineWidth',2,'color',errorComponent*errorColor+(1-errorComponent)*signalColor);
+        soundData = (repmat(signal+noise,1,periodsNeededForSound))/15;
     sampledSoundData = soundData(1:ticksPerSampleTick:end);
     sound(sampledSoundData,Fs)
     stop2 = toc(start2); %this times an actual pass
